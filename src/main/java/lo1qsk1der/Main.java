@@ -1,5 +1,6 @@
 package lo1qsk1der;
 
+import java.awt.*;
 import java.nio.IntBuffer;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
@@ -8,6 +9,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.system.MemoryUtil;
 import utils.MouseUtils;
+import utils.RenderUtils;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -35,7 +37,8 @@ public class Main {
     private static final GLFWMouseButtonCallback callback = new GLFWMouseButtonCallback() {
         @Override
         public void invoke(long window, int button, int action, int mods) {
-            isPressed = action == GLFW_PRESS;
+            if (button == GLFW_MOUSE_BUTTON_1)
+                isPressed = action == GLFW_PRESS;
         }
     };
 
@@ -133,17 +136,13 @@ public class Main {
 
             // Rotate matrix
             glLoadIdentity();
-            // glRotatef((float) glfwGetTime() * 50f, 0f, 0f, 1f);
+            glRotatef((float) glfwGetTime() * 50f, 0f, 1f, 0f); //glfwGetTime() 初始值0，类型是浮点，单位是秒
 
             // Begin render
             glBegin(GL_LINE_LOOP);
 
-            glColor3f(1f, 0f, 0f);
-            glVertex3f(-0.6f, -0.4f, 0f);
-            glColor3f(0f, 1f, 0f);
-            glVertex3f(0.6f, -0.4f, 0f);
-            glColor3f(0f, 0f, 1f);
-            glVertex3f(0f, 0.6f, 0f);
+            RenderUtils.drawCircle(0f,0f,0f,0.5f, Color.RED);
+            RenderUtils.drawCircle(0f,0f,-0.05f,0.5f, Color.BLACK);
 
             glEnd();
 
